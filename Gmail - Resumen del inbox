@@ -1,0 +1,368 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "weeks",
+              "triggerAtDay": [
+                5
+              ],
+              "triggerAtHour": 15
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -780,
+        80
+      ],
+      "id": "2459e043-616f-4234-8e70-93b8f5274be8",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "getAll",
+        "projectId": "ps4df2jsh3wcddv",
+        "table": "mfkvj7yjnqqz65h",
+        "returnAll": true,
+        "options": {
+          "fields": []
+        }
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        -540,
+        80
+      ],
+      "id": "9bec73b7-1029-44b7-97b8-94e43a351c34",
+      "name": "NocoDB",
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "IiAZIUw89hQyXs8q",
+          "name": "NocoDB - pablo.a.brunet@gmail.com"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "0401c600-0982-49f6-a437-130601e3e12b",
+              "leftValue": "={{ new Date($json.CreatedAt).toISOString().split('T')[0] }}",
+              "rightValue": "={{ new Date(Date.now() - (7 * 24 * 60 * 60 * 1000)).toISOString().split('T')[0] }}",
+              "operator": {
+                "type": "dateTime",
+                "operation": "after"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        -200,
+        80
+      ],
+      "id": "a828301d-f6d1-4d24-8830-78cfae2513a7",
+      "name": "Filter1"
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "Briefing"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        20,
+        80
+      ],
+      "id": "d4beb0a0-d72a-48f0-bf35-d2ada1166ed8",
+      "name": "Aggregate"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1435d3d4-7c78-475f-9587-6c77e399adfe",
+              "name": "Briefing",
+              "value": "={{ $json.Briefing }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        240,
+        80
+      ],
+      "id": "581015e9-97a8-4167-992e-cd078faad8a6",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Este es el resumen de la información que llegó a mi casilla de mail a lo largo de la semana: {{ $json.Briefing }}\n\nEsa información corresponde a un resumen del contenido que han tenido los mensajes que están vinculados con newsletters e información promocional.",
+        "options": {
+          "systemMessage": "=## **Instrucciones Generales:**\nEres un asistente especializado en procesar correos electrónicos promocionales y newsletters. Tu tarea es analizar los correos recibidos durante la semana y generar un resumen conciso y bien estructurado que incluya los puntos más relevantes de las promociones, novedades, eventos y recordatorios.\n\n## **Objetivo:**\n- Identificar información clave en newsletters y correos promocionales.\n- Filtrar contenido irrelevante o redundante.\n- Generar un resumen claro y organizado.\n\n---\n\n## **Formato del Resumen Generado:**\n\n### **Asunto:** Resumen semanal de newsletters y promociones\n\n---\n\n📢 **Ofertas destacadas:**\n- **[Marca/empresa]:** [Descripción de la promoción], válida hasta **[fecha]**.\n- **[Marca/empresa]:** Descuento especial en **[producto/servicio]**, exclusivo para **[tipo de cliente]**.\n\n🚀 **Novedades y lanzamientos:**\n- **[Empresa]** ha lanzado **[nuevo producto/servicio]** con mejoras en **[beneficio principal]**.\n- **[Plataforma]** ha actualizado sus funciones, incluyendo **[cambios clave]**.\n\n🎟 **Eventos y webinars:**\n- **[Evento]**: Charla sobre **[tema]**, el **[fecha]**, con **[ponente]**. Registro aquí: [enlace].\n- **[Webinar]**: Sesión en vivo sobre **[tema específico]**, acceso gratuito/limitado.\n\n⏳ **Fechas clave y recordatorios:**\n- Últimos días para **[aprovechar promoción/registrarse en evento]**, vence el **[fecha]**.\n- **Recordatorio:** **[Tema importante]**, acción recomendada antes de **[fecha]**."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        -620,
+        420
+      ],
+      "id": "e712f06a-9822-494c-a1ae-c8f22d1ff8ea",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -740,
+        660
+      ],
+      "id": "6f14b823-79e4-4f0a-9f5e-bfbf8abf2466",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "3wZ47KJvDN7PMOWC",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "key"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        -560,
+        660
+      ],
+      "id": "254abfff-c293-42f0-a672-fd51e3e32dc9",
+      "name": "Window Buffer Memory"
+    },
+    {
+      "parameters": {
+        "sendTo": "pbrunet@innerflowai.com",
+        "subject": "Resumen de Información y promociones",
+        "emailType": "text",
+        "message": "=Te paso un resumen de lo que recibiste en inbox de Información y promociones:\n\n{{ $json.output }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        -260,
+        420
+      ],
+      "id": "269137e6-4712-48d8-a680-cd06425392e3",
+      "name": "Gmail",
+      "webhookId": "256afc06-54d8-4cbe-a407-e083c93c590b",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "PaLfRkvMcZlor68F",
+          "name": "Gmail - pbrunet@innerflowai.com"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Consulto a la bases del inbox\n",
+        "height": 280,
+        "width": 480
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -840,
+        -40
+      ],
+      "typeVersion": 1,
+      "id": "2e2b3dc9-c67b-4d27-9686-013385914ca8",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## Edición y consolidación de mensajes\n- Tomo los mensajes de mi base de Información y promociones, y consolido en string para lectura del AI Agent",
+        "height": 280,
+        "width": 720,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -280,
+        -40
+      ],
+      "typeVersion": 1,
+      "id": "4fd82f6b-b9c1-4312-8c83-032abb7e63ef",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "## Resumen por email\n- Envío resumen a mi inbox para conocer brevemente qué tipo de información me llegó en esta bandeja.",
+        "height": 540,
+        "width": 820,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -840,
+        300
+      ],
+      "typeVersion": 1,
+      "id": "76a74249-3b31-4fdc-8065-e48ef5b38da1",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "![InnerFlow AI Logo](https://hqdvndqxberjkniyfndr.supabase.co/storage/v1/object/public/innerflow-ai//portada_n8n2.png)\n\n## Resumen de Correos Promocionales con IA y Nocodb\n\nLa gestión manual de correos promocionales y newsletters es ineficiente. Este flujo de trabajo automatiza el proceso utilizando IA para extraer información clave y enviar un resumen estructurado directamente al usuario.\n\nEste flujo de trabajo en n8n procesa y resume correos electrónicos promocionales. Los pasos incluyen:\n\n- Activación del flujo cada viernes a las 15:00.\n- Consulta de datos en NocoDB, obteniendo los correos promocionales recibidos durante la última semana.\n- Filtrado de correos recientes para descartar aquellos fuera del período relevante.\n- Consolidación y formateo del contenido para estructurar los datos.\n- Procesamiento con IA (GPT-4o-mini) para generar un resumen estructurado con:\n  - Promociones destacadas\n  - Lanzamientos y novedades\n  - Eventos y webinars\n  - Fechas clave y recordatorios\n- Almacenamiento temporal del contexto mediante un buffer de memoria para mejorar la coherencia.\n- Envío del resumen por Gmail proporcionando un vistazo rápido a la información más relevante.\n\nEsta automatización mejora la eficiencia en la gestión de correos, reduciendo el ruido y extrayendo solo los insights más importantes.",
+        "height": 880,
+        "width": 560,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1460,
+        -40
+      ],
+      "typeVersion": 1,
+      "id": "e054e0ee-b1bd-414f-9e08-27529e54ae94",
+      "name": "Sticky Note3"
+    }
+  ],
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "NocoDB",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "NocoDB": {
+      "main": [
+        [
+          {
+            "node": "Filter1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter1": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Gmail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Window Buffer Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "7f8f0f4649f3bb6798fa1755cd9db200f85117dd1a03aa7c8cef8d15eb8275f2"
+  }
+}
