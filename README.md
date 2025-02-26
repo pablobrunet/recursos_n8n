@@ -59,3 +59,15 @@ Este repositorio está bajo la licencia **MIT**, lo que permite su uso, modifica
 ## Contacto
 
 Si tienes dudas, sugerencias o necesitas soporte sobre algún flujo, puedes contactarme a través de mis redes o abrir un **issue** en este repositorio.
+
+🚀 Agenda una Consultoría GRATUITA para analizar tu negocio y descubrir cómo potenciarlo con Inteligencia Artificial: https://cal.com/pablobrunet
+
+¿Quieres anticiparte para que tu Negocio DESPEGUE con IA? 👇
+📒Descarga la GUÍA GRATUITA para adaptar tu negocio a la IA en 2025: https://tally.so/r/3Nbr8l
+
+✅ Puedes encontrarme en:
+Instagram:   / soypablobrunet  
+LinkedIn:   / pablobrunet  
+Web: https://innerflowai.com
+
+💡 InnerFlow AI: Simplifica tu negocio con IA y Automatizaciones.
