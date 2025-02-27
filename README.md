@@ -66,8 +66,8 @@ Si tienes dudas, sugerencias o necesitas soporte sobre algún flujo, puedes cont
 📒Descarga la GUÍA GRATUITA para adaptar tu negocio a la IA en 2025: https://tally.so/r/3Nbr8l
 
 ✅ Puedes encontrarme en:
-Instagram:   https://www.linkedin.com/in/pablobrunet/
-LinkedIn:   / pablobrunet  
+Instagram:   https://www.instagram.com/soypablobrunet/
+LinkedIn:   https://www.linkedin.com/in/pablobrunet/
 Web: https://innerflowai.com
 
 💡 InnerFlow AI: Simplifica tu negocio con IA y Automatizaciones.
