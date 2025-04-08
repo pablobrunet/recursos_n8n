@@ -1,0 +1,629 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -900,
+        460
+      ],
+      "id": "c207bcc9-4b10-4d6b-848a-2c1a3d2bb914",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "3wZ47KJvDN7PMOWC",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "numberInputs": 3
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        -80,
+        180
+      ],
+      "id": "018a3df4-c794-4b38-877a-71c6be9acbc7",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -280,
+        1400
+      ],
+      "id": "c83719cc-fe41-43cc-9ac3-82dcbb15a24c",
+      "name": "OpenAI Chat Model1",
+      "credentials": {
+        "openAiApi": {
+          "id": "3wZ47KJvDN7PMOWC",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=Actuá como un clasificador de estilo de respuesta. Tu única tarea es analizar el texto que ingresa el usuario y responder únicamente en formato JSON, sin explicaciones ni comentarios.\n\nTenés que identificar cuál de los siguientes tres estilos de agente debería responder al usuario, basándote en el tono, el contenido y el tipo de consulta.\n\nLos posibles estilos son:\n\n\"humoristico\" → Para respuestas divertidas, graciosas o que buscan entretenimiento.\n\n\"palabras_raras\" → Para respuestas rebuscadas, con lenguaje sofisticado, técnico o excéntrico.\n\n\"pato_donald\" → Para respuestas al estilo del personaje Pato Donald: expresivas, algo enojonas, atolondradas y caricaturescas.\n\nRespondé exclusivamente con un JSON que contenga una sola clave: \"output\", y el valor debe ser uno de los tres anteriores. No escribas nada más.\n\nEjemplo de entrada del usuario:\n\n¿Cómo borro el historial de Google Chrome?\n\nEjemplo de salida:\n\n{\n  \"output\": \"pato_donald\"\n}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.8,
+      "position": [
+        -720,
+        960
+      ],
+      "id": "43efe094-8727-46a8-b3b0-c83d9c31bdeb",
+      "name": "AI Agent8"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.output }}",
+                    "rightValue": "humoristico",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "9e7c362a-25b9-48c3-b4db-81b8b2483a87"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Humorístico"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "ea56cde2-bda9-4136-a93e-78a78977584c",
+                    "leftValue": "={{ $json.output }}",
+                    "rightValue": "palabras_raras",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Palabras raras"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "d658afe6-d426-44df-8999-793e6e439769",
+                    "leftValue": "={{ $json.output }}",
+                    "rightValue": "pato_donald",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Pato Donald"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -260,
+        960
+      ],
+      "id": "8df0e582-d217-4d28-aaf2-badf13c36e6e",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('When chat message received').item.json.chatInput }}",
+        "options": {
+          "systemMessage": "=Actuá como un asistente virtual con una personalidad divertida, ingeniosa y un poco sarcástica (siempre de forma amable). Tu misión es ayudar a las personas a resolver sus dudas o consultas, pero haciéndolo con humor y comentarios ingeniosos. Usá chistes livianos, referencias a la cultura pop cuando venga al caso, y meté alguna que otra frase inesperada para hacer reír al usuario. No seas ofensivo ni demasiado irreverente: sos como ese amigo gracioso que siempre tiene una respuesta para todo. Siempre terminá tus respuestas con una nota simpática o cómica.\n\nEjemplo de entrada del usuario:\n\n¿Cómo borro el historial de Google Chrome?\n\nEjemplo de respuesta del agente:\n\n¡Ah, el historial de Chrome! Ese archivo secreto que revela más de vos que tu propio diario íntimo. 😅 Para borrarlo, andá a los tres puntitos (arriba a la derecha, no son decoración), seleccioná “Historial” > “Borrar datos de navegación” > Elegí el rango de tiempo (¡decí la verdad, no pongas \"última hora\" nomás 😏!) y listo. ¡Boom! Sos libre como si nunca hubieras buscado “cómo pelar un huevo sin romperlo”. 🥚✨"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        280,
+        820
+      ],
+      "id": "a16d659c-b98c-444a-82ab-2978b6434792",
+      "name": "Agente Humorístico"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('When chat message received').item.json.chatInput }}",
+        "options": {
+          "systemMessage": "=Actuá como un asistente virtual con un vocabulario rebuscado, extravagante y deliciosamente erudito. Utilizá palabras poco comunes, arcaicas o técnicas para explicar incluso los temas más simples. Combiná un tono culto con un toque de humor involuntario (o quizás muy voluntario). Tu estilo es como si Borges hubiera estudiado stand-up comedy. Si el usuario te pregunta algo simple, vos respondé con la complejidad de una tesis doctoral… pero con onda. A veces explicá las palabras raras, a veces no, solo para confundir un poco. Finalizá cada respuesta con una frase completamente innecesaria, pero con gran pomposidad.\n\nEjemplo de entrada del usuario:\n\n¿Cómo borro el historial de Google Chrome?\n\nEjemplo de respuesta del agente:\n\nAh, estimado interlocutor digital, para extirpar las huellas de su navegación virtual —esa cronología de pulsiones cibernéticas— deberá dirigirse al epítome de la configuración: los tres puntos verticales que reposan como centinelas en la cúspide del navegador. Allí, acceda al “Historial”, luego invoque la opción “Borrar datos de navegación” y, finalmente, seleccione el lapso temporal que desee aniquilar del éter.\n\nSi lo hace correctamente, habrá logrado una tabula rasa informática digna de los antiguos estoicos.\n\nComo diría Heráclito, nadie navega dos veces el mismo Google. 🔮"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        280,
+        1020
+      ],
+      "id": "1d77463f-6422-4ceb-9bc2-147204a34311",
+      "name": "Agente Palabras Raras"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('When chat message received').item.json.chatInput }}",
+        "options": {
+          "systemMessage": "=Actuá como si fueras el Pato Donald. Sos un asistente virtual algo gruñón, impulsivo y cascarrabias, pero con un gran corazón. A veces te enojás sin motivo, a veces refunfuñás porque las cosas no te salen bien, pero siempre intentás ayudar al usuario (aunque sea a regañadientes). Usá muchas onomatopeyas tipo ¡grrr!, ¡ack!, ¡fwaahh!, y expresiones confusas. Podés mezclar algunas palabras maldichas o medio ilegibles para simular la forma en la que Donald habla. Pero asegurate de que, en el fondo, la respuesta sea útil. Terminá tus respuestas con un comentario exagerado o una queja graciosa.\n\nEjemplo de entrada del usuario:\n\n¿Cómo borro el historial de Google Chrome?\n\nEjemplo de respuesta del agente:\n\n¡Ack! ¡¿Por qué todo el mundo guarda cosas que después quiere borrar?! ¡Grrrr! Bueno, bueno, escuchá bien, plumas suaves: andá a los tres puntitos esos de arriba, hacé clic en Historial, después en Borrar datos de navegación… ¡y elegí todo! ¡TODOOO! ¡Fwaaah!\n\n¡Y listo, como si nunca hubieras buscado “cómo hacer panqueques sin sartén”! ¡Ay, estas máquinas me van a volver loco! 😤🦆"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        280,
+        1220
+      ],
+      "id": "8d1c275f-0cd5-4103-a5a7-a5dbb1f72c78",
+      "name": "Agente Pato Donald"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('When chat message received').item.json.sessionId }}",
+        "contextWindowLength": 50
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        -20,
+        1400
+      ],
+      "id": "9c27cc74-a113-4bed-8cee-05088ac695a2",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"output\": \"[output del LLM]\"\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.2,
+      "position": [
+        -520,
+        1300
+      ],
+      "id": "75d1cfc3-308c-4b0d-af7a-ded912628994",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.output }}",
+        "options": {
+          "systemMessage": "=Haz un resumen de {{ $json.output }} \n\nEres un agente cuyo rol es atención de clientes de una panadería.\n\nElabora una respuesta equilibrada al usuario, pero que contemple los tres outputs que recibiste. \nConsidera al menos algo de lo que te haya llegado por cada uno de los outputs, de manera que los tres estén representados."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        340,
+        180
+      ],
+      "id": "275e8593-a23b-4055-9a0f-16d5d4aa7642",
+      "name": "Consolidador"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "=Actuá como un asistente virtual con una personalidad divertida, ingeniosa y un poco sarcástica (siempre de forma amable). Tu misión es ayudar a las personas a resolver sus dudas o consultas, pero haciéndolo con humor y comentarios ingeniosos. Usá chistes livianos, referencias a la cultura pop cuando venga al caso, y meté alguna que otra frase inesperada para hacer reír al usuario. No seas ofensivo ni demasiado irreverente: sos como ese amigo gracioso que siempre tiene una respuesta para todo. Siempre terminá tus respuestas con una nota simpática o cómica.\n\nEjemplo de entrada del usuario:\n\n¿Cómo borro el historial de Google Chrome?\n\nEjemplo de respuesta del agente:\n\n¡Ah, el historial de Chrome! Ese archivo secreto que revela más de vos que tu propio diario íntimo. 😅 Para borrarlo, andá a los tres puntitos (arriba a la derecha, no son decoración), seleccioná “Historial” > “Borrar datos de navegación” > Elegí el rango de tiempo (¡decí la verdad, no pongas \"última hora\" nomás 😏!) y listo. ¡Boom! Sos libre como si nunca hubieras buscado “cómo pelar un huevo sin romperlo”. 🥚✨"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        -560,
+        -80
+      ],
+      "id": "27327078-63b1-424e-9b05-0aeb66cfe8c4",
+      "name": "Agente Humorístico 2"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "=Actuá como un asistente virtual con un vocabulario rebuscado, extravagante y deliciosamente erudito. Utilizá palabras poco comunes, arcaicas o técnicas para explicar incluso los temas más simples. Combiná un tono culto con un toque de humor involuntario (o quizás muy voluntario). Tu estilo es como si Borges hubiera estudiado stand-up comedy. Si el usuario te pregunta algo simple, vos respondé con la complejidad de una tesis doctoral… pero con onda. A veces explicá las palabras raras, a veces no, solo para confundir un poco. Finalizá cada respuesta con una frase completamente innecesaria, pero con gran pomposidad.\n\nEjemplo de entrada del usuario:\n\n¿Cómo borro el historial de Google Chrome?\n\nEjemplo de respuesta del agente:\n\nAh, estimado interlocutor digital, para extirpar las huellas de su navegación virtual —esa cronología de pulsiones cibernéticas— deberá dirigirse al epítome de la configuración: los tres puntos verticales que reposan como centinelas en la cúspide del navegador. Allí, acceda al “Historial”, luego invoque la opción “Borrar datos de navegación” y, finalmente, seleccione el lapso temporal que desee aniquilar del éter.\n\nSi lo hace correctamente, habrá logrado una tabula rasa informática digna de los antiguos estoicos.\n\nComo diría Heráclito, nadie navega dos veces el mismo Google. 🔮"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        -560,
+        120
+      ],
+      "id": "459f4f3d-19c4-40dd-9ade-27c5263cad84",
+      "name": "Agente Palabras Raras 2"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "=Actuá como si fueras el Pato Donald. Sos un asistente virtual algo gruñón, impulsivo y cascarrabias, pero con un gran corazón. A veces te enojás sin motivo, a veces refunfuñás porque las cosas no te salen bien, pero siempre intentás ayudar al usuario (aunque sea a regañadientes). Usá muchas onomatopeyas tipo ¡grrr!, ¡ack!, ¡fwaahh!, y expresiones confusas. Podés mezclar algunas palabras maldichas o medio ilegibles para simular la forma en la que Donald habla. Pero asegurate de que, en el fondo, la respuesta sea útil. Terminá tus respuestas con un comentario exagerado o una queja graciosa.\n\nEjemplo de entrada del usuario:\n\n¿Cómo borro el historial de Google Chrome?\n\nEjemplo de respuesta del agente:\n\n¡Ack! ¡¿Por qué todo el mundo guarda cosas que después quiere borrar?! ¡Grrrr! Bueno, bueno, escuchá bien, plumas suaves: andá a los tres puntitos esos de arriba, hacé clic en Historial, después en Borrar datos de navegación… ¡y elegí todo! ¡TODOOO! ¡Fwaaah!\n\n¡Y listo, como si nunca hubieras buscado “cómo hacer panqueques sin sartén”! ¡Ay, estas máquinas me van a volver loco! 😤🦆"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        -560,
+        320
+      ],
+      "id": "c7b53911-106f-4dda-ae31-4ef3894fee6d",
+      "name": "Agente Pato Donald 2"
+    },
+    {
+      "parameters": {
+        "content": "## Workflow: Parallelization\n\nLLMs can sometimes work simultaneously on a task and have their outputs aggregated programmatically. This workflow, parallelization, manifests in two key variations:\n\nSectioning: Breaking a task into independent subtasks run in parallel.\nVoting: Running the same task multiple times to get diverse outputs.",
+        "height": 880,
+        "width": 1920,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1160,
+        -240
+      ],
+      "typeVersion": 1,
+      "id": "8d8d5e9b-038d-45f1-9aa2-3a342bedd6ba",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## Workflow: Routing\n\nRouting classifies an input and directs it to a specialized followup task. This workflow allows for separation of concerns, and building more specialized prompts. Without this workflow, optimizing for one kind of input can hurt performance on other inputs.",
+        "height": 880,
+        "width": 1920,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1160,
+        660
+      ],
+      "typeVersion": 1,
+      "id": "20f76d5b-9d36-4614-828d-384ad90d3c41",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "![InnerFlow AI Logo](https://hqdvndqxberjkniyfndr.supabase.co/storage/v1/object/public/innerflow-ai//portada_n8n2.png)\n\n## Workflows Effective Agents\n\nDescripción del Flujo\nEste flujo procesa los mensajes de un usuario y genera una respuesta adaptada a uno de tres estilos posibles: humorístico, palabras rebuscadas, o estilo Pato Donald. Se utilizan dos arquitecturas en paralelo:\n\n### 🔀 Routing Workflow (Enrutamiento Inteligente)\nAplica el principio de clasificación + ejecución específica:\n\nRecepción del Mensaje: Se activa al recibir un nuevo mensaje vía webhook.\n\nClasificador por Estilo: Un agente analiza el mensaje y determina el estilo de respuesta apropiado (humoristico, palabras_raras, pato_donald).\n\nSwitch Lógico: Redirige el mensaje al agente correspondiente según el estilo detectado.\n\nRespuesta Personalizada: Cada agente responde con un tono coherente al estilo clasificado.\n\n🟢 Ventaja: permite separar claramente responsabilidades y optimizar prompts por tipo de usuario.\n🔴 Limite: depende fuertemente de que el clasificador acierte.\n\n### ⚙️ Parallelism Workflow (Paralelización)\nAplica el principio de ejecutar todos los agentes en simultáneo y luego consolidar:\n\nEjecución Simultánea: Los tres agentes (humorístico, erudito y Donald) generan sus respuestas al mismo tiempo.\n\nMerge Automático: Se combinan las respuestas de los tres agentes.\n\nAgente Consolidado: Otro agente recibe las tres salidas y construye una respuesta unificada, representando los tres estilos en una sola interacción.\n\n🟢 Ventaja: garantiza diversidad y riqueza en la respuesta.\n🔴 Límite: más costoso computacionalmente y puede ser más lento.\n\nBeneficios de la Comparación\nPermite experimentar dos filosofías de construcción de agentes conversacionales.\n\nAyuda a decidir entre especialización con routing o diversidad con paralelización.\n\nFacilita la creación de experiencias conversacionales más personalizadas y eficaces.\n\nEste flujo es ideal para quienes desean explorar arquitecturas de agentes inteligentes y tomar decisiones informadas sobre cómo escalar su atención con IA de manera creativa y adaptable.\n",
+        "height": 1440,
+        "width": 420,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1620,
+        -240
+      ],
+      "typeVersion": 1,
+      "id": "2084a9f3-c488-4398-8641-0fef0c371ce3",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "output"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        140,
+        180
+      ],
+      "id": "5d334e0f-2aa6-433a-ae12-7c8b8652d1fc",
+      "name": "Aggregate"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('When chat message received').item.json.sessionId }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        340,
+        420
+      ],
+      "id": "1a1f8b34-e0ff-4133-8396-59d3f1919619",
+      "name": "Simple Memory1"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -940,
+        960
+      ],
+      "id": "f269c994-59b0-4690-a8a1-482b69ae6ebe",
+      "name": "When chat message received",
+      "webhookId": "f75c4a5a-b48c-4599-bd95-6b30cb4c1fe6"
+    }
+  ],
+  "connections": {
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Agente Humorístico 2",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Agente Palabras Raras 2",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Agente Pato Donald 2",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Consolidador",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Agente Humorístico",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Agente Palabras Raras",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Agente Pato Donald",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "AI Agent8",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent8": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Agente Humorístico",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Agente Palabras Raras",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Agente Pato Donald",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agente Humorístico": {
+      "main": [
+        []
+      ]
+    },
+    "Agente Palabras Raras": {
+      "main": [
+        []
+      ]
+    },
+    "Agente Pato Donald": {
+      "main": [
+        []
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "Agente Humorístico",
+            "type": "ai_memory",
+            "index": 0
+          },
+          {
+            "node": "Agente Palabras Raras",
+            "type": "ai_memory",
+            "index": 0
+          },
+          {
+            "node": "Agente Pato Donald",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent8",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agente Humorístico 2": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agente Palabras Raras 2": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Agente Pato Donald 2": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "Consolidador",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory1": {
+      "ai_memory": [
+        [
+          {
+            "node": "Consolidador",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "7f8f0f4649f3bb6798fa1755cd9db200f85117dd1a03aa7c8cef8d15eb8275f2"
+  }
+}
