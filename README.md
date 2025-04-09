@@ -62,7 +62,7 @@ Si tienes dudas, sugerencias o necesitas soporte sobre algún flujo, puedes cont
 
 🚀 Agenda una Consultoría GRATUITA para analizar tu negocio y descubrir cómo potenciarlo con Inteligencia Artificial: https://cal.com/pablobrunet 
 
-¿Quieres anticiparte para que tu Negocio DESPEGUE con IA? 👇 📒Descarga la GUÍA GRATUITA para adaptar tu negocio a la IA en 2025: https://tally.so/r/3Nbr8l 
+¿Quieres anticiparte para que tu Negocio DESPEGUE con IA? 👇 📒Descarga todos mis RECURSOS GRATUITOS acá: https://update.infra-growth.com/widget/form/BAoZkEAVru1jgAvrWBjf
 
 Puedes encontrarme en:
 
