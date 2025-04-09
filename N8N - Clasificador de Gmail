@@ -62,30 +62,6 @@
     },
     {
       "parameters": {
-        "model": {
-          "__rl": true,
-          "mode": "list",
-          "value": "gpt-4o-mini"
-        },
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
-      "typeVersion": 1.2,
-      "position": [
-        -700,
-        320
-      ],
-      "id": "2aa61dfb-8b11-4efe-80ed-72eef1bf5135",
-      "name": "OpenAI Chat Model",
-      "credentials": {
-        "openAiApi": {
-          "id": "3wZ47KJvDN7PMOWC",
-          "name": "OpenAi account"
-        }
-      }
-    },
-    {
-      "parameters": {
         "operation": "addLabels",
         "messageId": "={{ $json.id }}",
         "labelIds": [
@@ -95,7 +71,7 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
       "position": [
-        -180,
+        -220,
         20
       ],
       "id": "8a9a2785-6bee-4230-9bd2-12e90830c09b",
@@ -119,7 +95,7 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
       "position": [
-        -180,
+        -220,
         240
       ],
       "id": "803eb6d0-28f3-4beb-a637-c05d11dbc38c",
@@ -143,7 +119,7 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
       "position": [
-        -180,
+        -220,
         480
       ],
       "id": "9409f2d7-1b8b-4676-aed3-c46223dc4bcf",
@@ -167,7 +143,7 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
       "position": [
-        -180,
+        -220,
         860
       ],
       "id": "f6bd7f35-3411-4f44-af5c-5042f672cba2",
@@ -200,7 +176,7 @@
       "type": "@n8n/n8n-nodes-langchain.openAi",
       "typeVersion": 1.8,
       "position": [
-        40,
+        0,
         20
       ],
       "id": "a2e429b3-23fa-4c64-9ee7-6f7e9403b723",
@@ -233,7 +209,7 @@
       "type": "@n8n/n8n-nodes-langchain.openAi",
       "typeVersion": 1.8,
       "position": [
-        40,
+        0,
         860
       ],
       "id": "c2bb9f9a-d1d7-4c8c-973f-ab84f546939f",
@@ -248,13 +224,13 @@
     {
       "parameters": {
         "content": "![InnerFlow AI Logo](https://hqdvndqxberjkniyfndr.supabase.co/storage/v1/object/public/innerflow-ai//portada_n8n2.png)\n\n## Clasificación Automática de Correos con IA\n\nLa gestión manual de correos electrónicos puede ser ineficiente y propensa a errores. Este flujo de trabajo automatiza la clasificación de correos utilizando **Inteligencia Artificial** y asignación de etiquetas en **Gmail**, mejorando la organización y priorización de los mensajes.\n\n### **Descripción del Flujo**\nEste flujo de trabajo procesa correos electrónicos entrantes y los clasifica automáticamente según su contenido. Los pasos incluyen:\n\n- **Activación Automática**: El flujo se ejecuta cada minuto para detectar nuevos correos electrónicos en Gmail.\n- **Análisis de Contenido**: Se utiliza un **Clasificador de Texto** basado en IA para categorizar cada correo según su relevancia.\n- **Categorización de Correos**:\n  - **Alta Prioridad**: Urgencias o tareas críticas.\n  - **Clientes**: Consultas y comunicaciones con clientes.\n  - **Pagos y Cobranzas**: Facturas, transferencias y temas financieros.\n  - **Información y Promociones**: Newsletters y correos no urgentes.\n- **Etiquetado Automático**: Se agregan etiquetas en Gmail para facilitar la gestión y búsqueda de correos según su categoría.\n- **Generación de Borradores con IA**: Para ciertos correos, un modelo de **GPT-4o-mini** genera respuestas automáticas que se guardan en **borradores** para revisión y envío manual si es necesario.\n- **Almacenamiento en Base de Datos**: Se guardan registros de ciertos correos en **NocoDB**, lo que permite el análisis y seguimiento de tendencias.\n\n### **Beneficios de la Automatización**\n- **Reducción del tiempo de clasificación manual**.\n- **Priorización eficiente** de correos según su urgencia.\n- **Respuestas más rápidas** mediante la generación automática de borradores.\n- **Mayor trazabilidad** gracias al almacenamiento en base de datos.\n\nEste flujo optimiza la gestión de correos electrónicos y mejora la productividad al eliminar la necesidad de clasificación manual y respuestas repetitivas.\n",
-        "height": 1380,
-        "width": 340,
+        "height": 1240,
+        "width": 420,
         "color": 7
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1540,
+        -1600,
         -140
       ],
       "typeVersion": 1,
@@ -272,7 +248,7 @@
         "messages": {
           "values": [
             {
-              "content": "=### **Instrucciones Generales**\nEres un asistente de inteligencia artificial diseñado para analizar correos electrónicos de clientes sobre **servicio, entrega y problemas** y generar una **respuesta automatizada** adecuada al contexto. Tu objetivo es **comprender el hilo completo de la conversación**, interpretar las necesidades del cliente y redactar un borrador de respuesta clara, profesional y efectiva.\n\n---\n\n### **Objetivo**\n- Analizar el contenido del correo y la conversación previa (si existe un hilo de correos).\n- Extraer información clave sobre la consulta, reclamo o seguimiento del servicio.\n- Redactar un **borrador de respuesta estructurado y listo para revisión** antes de ser enviado al cliente.\n- Mantener un tono profesional, empático y alineado con el contexto del mensaje.\n\n### **Generación del Borrador de Respuesta**\nEl agente debe redactar una respuesta clara y estructurada. La respuesta debe cumplir con los siguientes criterios:\n\n- **Debe ser breve, clara y profesional.**\n- **Debe responder a la inquietud del cliente de forma directa.**\n- **Si es necesario, debe solicitar información adicional de manera cordial.**\n- **Debe incluir un cierre amable y orientado a la acción.**\n- **Debe mantener la formalidad o el tono acorde al contexto del correo.**\n\n### El contenido del mail es el siguiente:\n\n{{ $json.snippet }}"
+              "content": "=### **Instrucciones Generales**\nEres un asistente de inteligencia artificial diseñado para analizar correos electrónicos de clientes sobre **servicio, entrega y problemas** y generar una **respuesta automatizada** adecuada al contexto. Tu objetivo es **comprender el hilo completo de la conversación**, interpretar las necesidades del cliente y redactar un borrador de respuesta clara, profesional y efectiva.\n\n---\n\n### **Objetivo**\n- Analizar el contenido del correo y la conversación previa (si existe un hilo de correos).\n- Extraer información clave sobre la consulta, reclamo o seguimiento del servicio.\n- Redactar un **borrador de respuesta estructurado y listo para revisión** antes de ser enviado al cliente.\n- Mantener un tono profesional, empático y alineado con el contexto del mensaje.\n\n### **Generación del Borrador de Respuesta**\nEl agente debe redactar una respuesta clara y estructurada. La respuesta debe cumplir con los siguientes criterios:\n\n- **Debe ser breve, clara y profesional.**\n- **Debe responder a la inquietud del cliente de forma directa.**\n- **Si es necesario, debe solicitar información adicional de manera cordial.**\n- **Debe incluir un cierre amable y orientado a la acción.**\n- **Debe mantener la formalidad o el tono acorde al contexto del correo.**\n\n### El contenido del mensaje es el siguiente:\n\n{{ $('Text Classifier').item.json.snippet }}"
             }
           ]
         },
@@ -285,7 +261,7 @@
       "type": "@n8n/n8n-nodes-langchain.openAi",
       "typeVersion": 1.8,
       "position": [
-        40,
+        0,
         240
       ],
       "id": "516428b2-5e3c-44b8-82f2-d20c1a1d4f0d",
@@ -307,13 +283,13 @@
           "cachedResultName": "Agent"
         },
         "prompt": "define",
-        "text": "=## **Prompt para Agente de IA: Briefing de Pagos y Cobranzas en Correos Electrónicos**\n\n### **Instrucciones Generales**\nEres un asistente de inteligencia artificial especializado en procesar correos electrónicos relacionados con pagos y cobranzas. Tu tarea es **analizar el contenido del correo recibido** y generar un **resumen estructurado y preciso** que contenga los datos esenciales de cada mensaje.\n- El contenido que recibes es el siguiente:\n\n{{ $('Text Classifier').item.json.snippet }}\n\n### **Objetivo**\n- Extraer información clave sobre pagos y cobranzas de los correos electrónicos.\n- Identificar montos, fechas, clientes, vencimientos y estados de pago.\n- Estandarizar el contenido en un formato claro y conciso para facilitar su consulta.",
+        "text": "=- El contenido que recibes es el siguiente:\n\n{{ $('Text Classifier').item.json.snippet }}",
         "options": {}
       },
       "type": "@n8n/n8n-nodes-langchain.openAi",
       "typeVersion": 1.8,
       "position": [
-        40,
+        0,
         480
       ],
       "id": "3571e08e-a8df-4c56-b082-7bae0844440d",
@@ -329,8 +305,8 @@
       "parameters": {
         "authentication": "nocoDbApiToken",
         "operation": "create",
-        "projectId": "ps4df2jsh3wcddv",
-        "table": "mi3wuuaturt66j8",
+        "projectId": "pbfd8ezkymjg3tl",
+        "table": "mseehyxgllblt7l",
         "fieldsUi": {
           "fieldValues": [
             {
@@ -339,7 +315,7 @@
             },
             {
               "fieldName": "Briefing",
-              "fieldValue": "={{ $('Text Classifier').item.json.snippet }}"
+              "fieldValue": "={{ $json.output }}"
             }
           ]
         }
@@ -347,7 +323,7 @@
       "type": "n8n-nodes-base.nocoDb",
       "typeVersion": 3,
       "position": [
-        420,
+        380,
         480
       ],
       "id": "ebc5c363-39f9-453e-b37b-692ad78a4d4d",
@@ -363,17 +339,17 @@
       "parameters": {
         "authentication": "nocoDbApiToken",
         "operation": "create",
-        "projectId": "ps4df2jsh3wcddv",
-        "table": "mfkvj7yjnqqz65h",
+        "projectId": "pbfd8ezkymjg3tl",
+        "table": "m7hfbgfsjoab91t",
         "fieldsUi": {
           "fieldValues": [
             {
-              "fieldName": "Remitente",
+              "fieldName": "Sender",
               "fieldValue": "={{ $('Text Classifier').item.json.From }}"
             },
             {
               "fieldName": "Briefing",
-              "fieldValue": "={{ $('Text Classifier').item.json.snippet }}"
+              "fieldValue": "={{ $json.message.content }}"
             }
           ]
         }
@@ -381,7 +357,7 @@
       "type": "n8n-nodes-base.nocoDb",
       "typeVersion": 3,
       "position": [
-        420,
+        380,
         860
       ],
       "id": "b0b8c08c-45e5-4e6a-a630-cd0aee9d7230",
@@ -395,20 +371,6 @@
     },
     {
       "parameters": {
-        "sessionIdType": "customKey",
-        "sessionKey": "key"
-      },
-      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
-      "typeVersion": 1.3,
-      "position": [
-        60,
-        660
-      ],
-      "id": "c58ca515-5d11-4dd4-bbc6-5c6035f8d2e0",
-      "name": "Window Buffer Memory"
-    },
-    {
-      "parameters": {
         "resource": "draft",
         "subject": "=RE: {{ $('Text Classifier').item.json.Subject }}",
         "message": "={{ $json.choices[0].message.content }}",
@@ -419,7 +381,7 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
       "position": [
-        420,
+        380,
         240
       ],
       "id": "dd77a90c-17d2-46c7-8f3c-0b5e3177a43c",
@@ -444,7 +406,7 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
       "position": [
-        420,
+        380,
         20
       ],
       "id": "249f1e3c-0f78-41f4-a570-d148d4727100",
@@ -459,8 +421,80 @@
     },
     {
       "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "claude-3-5-haiku-20241022",
+          "mode": "list",
+          "cachedResultName": "Claude 3.5 Haiku"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+      "typeVersion": 1.3,
+      "position": [
+        -740,
+        260
+      ],
+      "id": "8eb4d348-d029-4875-be66-5e8f9049d449",
+      "name": "Anthropic Chat Model",
+      "credentials": {
+        "anthropicApi": {
+          "id": "Y7gxUGU8YVpz9UMb",
+          "name": "Anthropic account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('Pagos y Cobranzas').item.json.threadId }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        80,
+        700
+      ],
+      "id": "7e1b44c9-9e0a-4c6b-bb42-12533375cf6e",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "content": "## Text Classifier\n- Analiza los emails, categorizándolos y emitiendo un direccionamiento.",
+        "height": 1240,
+        "width": 560,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -900,
+        -140
+      ],
+      "typeVersion": 1,
+      "id": "87242055-9e2c-4cd5-944b-464b79b0a2f5",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "## Agregar etiquetas y guardar en base de datos\n- Dependiendo la respuesta, trabajamos el contenido de los mails con el objetivo principal de ser resolutivos pero a su vez de tener un resumen de aquellos correos que son menos prioritarios o más repetitivos a lo largo del tiempo.",
+        "height": 1240,
+        "width": 960,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -320,
+        -140
+      ],
+      "typeVersion": 1,
+      "id": "87bfa21e-efbf-4f76-be18-723cc5eadee5",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
         "content": "## Gmail Trigger\n- Traemos todos los mails cada minuto, para clasificarlos automáticamente con su correspondiente label.",
-        "height": 900
+        "height": 1240,
+        "color": 4
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
@@ -473,19 +507,19 @@
     },
     {
       "parameters": {
-        "content": "## Agregar etiquetas y guardar en base de datos\n- Dependiendo la respuesta, trabajamos el contenido de los mails con el objetivo principal de ser resolutivos pero a su vez de tener un resumen de aquellos correos que son menos prioritarios o más repetitivos a lo largo del tiempo.",
-        "height": 1240,
-        "width": 960,
-        "color": 4
+        "content": "Acá el tutorial para que lo puedas implementar:\n\n[![Youtube Thumbnail](https://i.insider.com/5d41b075454a397c1a051dd5?width=700)](https://www.youtube.com/watch?v=G16sMzCJ6MU&t=1398s)\n",
+        "height": 360,
+        "width": 460,
+        "color": 7
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -280,
+        -2080,
         -140
       ],
       "typeVersion": 1,
-      "id": "87bfa21e-efbf-4f76-be18-723cc5eadee5",
-      "name": "Sticky Note1"
+      "id": "d1718f43-4aa9-44a1-93bb-7f30be6aeaa6",
+      "name": "Sticky Note4"
     }
   ],
   "connections": {
@@ -527,17 +561,6 @@
           {
             "node": "Información y promociones",
             "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "OpenAI Chat Model": {
-      "ai_languageModel": [
-        [
-          {
-            "node": "Text Classifier",
-            "type": "ai_languageModel",
             "index": 0
           }
         ]
@@ -631,7 +654,18 @@
         ]
       ]
     },
-    "Window Buffer Memory": {
+    "Anthropic Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Text Classifier",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
       "ai_memory": [
         [
           {
