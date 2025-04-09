@@ -1,0 +1,432 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "content": "![InnerFlow AI Logo](https://hqdvndqxberjkniyfndr.supabase.co/storage/v1/object/public/innerflow-ai//portada_n8n2.png)\n\n## **Análisis Multidimensional de Situaciones con IA**\n\n### **Descripción del Flujo**\nEste flujo en **n8n** permite analizar una situación desde múltiples perspectivas, considerando aspectos **legales, impositivos, administrativos y emocionales**. A través de la integración con modelos de **IA de OpenAI**, facilita la toma de decisiones estructuradas con pasos claros y plazos definidos.\n\n### **Aplicaciones en Procesos de Toma de Decisiones**\n- **Evaluación Legal y Regulatoria:** Analiza la viabilidad jurídica de una situación específica.\n- **Análisis Contable e Impositivo:** Evalúa implicaciones fiscales y administrativas de cada caso.\n- **Gestión Administrativa:** Identifica oportunidades de optimización en procesos internos.\n- **Impacto Emocional y Familiar:** Considera el factor humano en la toma de decisiones.\n\n### **Beneficios**\n- **Análisis Integral:** Examina situaciones desde diversas disciplinas para brindar una solución bien fundamentada.\n- **Automatización del Pensamiento Crítico:** Reduce la carga de análisis manual mediante la IA.\n- **Toma de Decisiones Basada en Datos:** Proporciona recomendaciones estructuradas con **próximos pasos y plazos previstos**.\n\nEste flujo permite abordar desafíos complejos con un enfoque holístico, optimizando la toma de decisiones y mejorando la precisión en la evaluación de diferentes escenarios.\n",
+        "height": 940,
+        "width": 460,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1180,
+        -380
+      ],
+      "typeVersion": 1,
+      "id": "2f984455-2ef9-4ffa-aee9-ec55f35e17ab",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "content": "Acá el tutorial para que lo puedas implementar:\n\n[![Youtube Thumbnail](https://i.insider.com/5d41b075454a397c1a051dd5?width=700)](https://www.youtube.com/watch?v=pIJWqxq2loU&t=1651s)\n",
+        "height": 360,
+        "width": 460,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1180,
+        580
+      ],
+      "typeVersion": 1,
+      "id": "bc04ff87-3236-48e5-a143-aaa9e7db35d7",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "## 1. Flujo de Multi Agentes tomadores de decisión.\n",
+        "height": 1100,
+        "width": 2120,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -680,
+        -380
+      ],
+      "typeVersion": 1,
+      "id": "d4255332-69a5-4a48-a5ca-3ab8d7a5b15a",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -540,
+        -60
+      ],
+      "id": "d1b501a0-766b-48ca-ae5a-d32eb2100622",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini-2024-07-18",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI-2024-07-18"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "={{ $json.input }}"
+            },
+            {
+              "content": "=Eres un vendedor responsable de gestionar directamente la relación con la empresa ABC. Tu función implica entender profundamente las necesidades del cliente, mantener su satisfacción y sostener una buena relación comercial. Analiza el caso presentado por el cliente y formula una opinión fundamentada sobre su pedido de rebaja, considerando principalmente:\n\nLas interacciones recientes con el cliente y su nivel actual de satisfacción.\n\nLa importancia estratégica de ABC en tu cartera de clientes.\n\nLuego, concluye si recomiendas aceptar o no aceptar la propuesta de rebaja de precios del cliente, explicando claramente las razones de tu decisión.",
+              "role": "assistant"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        -240,
+        -240
+      ],
+      "id": "96eeb439-e5c9-4493-a852-5e8bcc606524",
+      "name": "Agende VENDEDOR",
+      "credentials": {
+        "openAiApi": {
+          "id": "3wZ47KJvDN7PMOWC",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini-2024-07-18",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI-2024-07-18"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "={{ $json.input }}"
+            },
+            {
+              "content": "=Eres el jefe de ventas encargado de supervisar la rentabilidad del equipo comercial, definir estrategias comerciales y asegurar la fidelización de los clientes clave. Revisa la situación planteada por la empresa ABC solicitando una reducción de precios y proporciona tu análisis basado en:\n\nEl impacto financiero y estratégico que tendría aceptar la rebaja.\n\nLas implicancias sobre la relación con otros clientes si se otorga esta rebaja.\n\nPresenta tu conclusión claramente fundamentada, indicando si aceptas o no la rebaja solicitada.",
+              "role": "assistant"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        -240,
+        0
+      ],
+      "id": "3418e2a1-d1d7-4af0-8524-4ae4e967f902",
+      "name": "Agende SUPERVISOR",
+      "credentials": {
+        "openAiApi": {
+          "id": "3wZ47KJvDN7PMOWC",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini-2024-07-18",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI-2024-07-18"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "={{ $json.input }}"
+            },
+            {
+              "content": "=Tu rol implica evaluar los costos internos, la estructura de precios y realizar cotizaciones alineadas a la rentabilidad esperada por la empresa. Ante la solicitud de rebaja planteada por la empresa ABC, tu análisis debe centrarse en:\n\nLa capacidad actual del servicio para ajustar costos sin afectar calidad ni margen.\n\nLa comparación con precios del mercado mencionados por el cliente y su viabilidad real.\n\nFormula una conclusión que recomiende aceptar o rechazar la solicitud de rebaja, con un fundamento sólido en términos económicos y comerciales.",
+              "role": "assistant"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        -240,
+        240
+      ],
+      "id": "62441e29-cc53-4ad4-9507-85253d2173d7",
+      "name": "Agente COTIZACIONES",
+      "credentials": {
+        "openAiApi": {
+          "id": "3wZ47KJvDN7PMOWC",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini-2024-07-18",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI-2024-07-18"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "={{ $json.input }}"
+            },
+            {
+              "content": "=Tu responsabilidad es asegurar la eficiencia operativa de los procesos comerciales, incluyendo la planificación de recursos, asignación del personal y gestión administrativa. Considerando la propuesta de rebaja solicitada por la empresa ABC, tu evaluación debe centrarse en:\n\nEl impacto operativo que tendría aceptar la reducción en términos de asignación de recursos y personal.\n\nLa viabilidad operativa de mantener la calidad del servicio bajo condiciones económicas ajustadas.\n\nPresenta una conclusión clara sobre si es operativo y recomendable aceptar o rechazar la rebaja propuesta, fundamentada en las implicaciones prácticas y administrativas.\n\n",
+              "role": "assistant"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        -240,
+        480
+      ],
+      "id": "a43451ca-9ca8-4217-a688-88918a61aed5",
+      "name": "Agente OPERATIVOS",
+      "credentials": {
+        "openAiApi": {
+          "id": "3wZ47KJvDN7PMOWC",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "numberInputs": 4
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        420,
+        40
+      ],
+      "id": "8c1cf1dc-33dc-426b-9227-e92a1b249312",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.mensaje }}",
+        "options": {
+          "systemMessage": "=Eres un agente responsable de integrar las opiniones de cuatro roles clave dentro del área comercial (Vendedor, Jefe de Ventas, Responsable de Cotizaciones y Responsable de Operaciones Comerciales) sobre la propuesta de rebaja del 15% planteada por el cliente ABC. Tu función es analizar detenidamente las perspectivas, razones y conclusiones aportadas por cada rol para emitir un informe coherente y fundamentado.\n\nTu informe debe incluir explícitamente:\n\nUna recomendación clara sobre aceptar o no aceptar la rebaja del 15% solicitada por el cliente.\n\nUna justificación breve y lógica basada en la integración equilibrada de los argumentos financieros, comerciales, estratégicos y operativos presentados por cada rol.\n\nAsegúrate de que el informe sea claro, conciso y refleje una decisión bien fundamentada en términos del beneficio global para la empresa XYZ."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        1060,
+        60
+      ],
+      "id": "69391971-71a7-42c4-900b-fc4b6012c2e2",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o",
+          "mode": "list",
+          "cachedResultName": "gpt-4o"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        1180,
+        340
+      ],
+      "id": "7270311a-47de-4e97-9d74-afd1be979ff8",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "3wZ47KJvDN7PMOWC",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "eb1dde75-2dd3-49bc-9789-7c50ade54a55",
+              "name": "mensaje.consolidado",
+              "value": "={{ $json.message.content }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        620,
+        60
+      ],
+      "id": "3e5fe3ac-0b00-49ea-8322-ffb369468bf5",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "mensaje"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        840,
+        60
+      ],
+      "id": "927033ed-0d48-46b1-af04-4b0e67b10d51",
+      "name": "Aggregate"
+    }
+  ],
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Agende VENDEDOR",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Agende SUPERVISOR",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Agente COTIZACIONES",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Agente OPERATIVOS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agende VENDEDOR": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agende SUPERVISOR": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Agente COTIZACIONES": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Agente OPERATIVOS": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 3
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {
+    "When clicking ‘Test workflow’": [
+      {
+        "input": "Empresa XYZ ofrece servicios mensuales de mantenimiento informático a la empresa ABC, con un abono mensual de $150,000. Recientemente, la empresa ABC solicitó una reunión para renegociar los términos del servicio, específicamente pidiendo una rebaja del 15% sobre el precio actual. Las razones planteadas por el cliente para justificar esta rebaja son: Disminución en la necesidad del servicio: La empresa ABC ha implementado recientemente una serie de cambios internos en su infraestructura tecnológica, incluyendo la renovación de equipos y la adopción de sistemas más robustos y eficientes. Esto ha reducido significativamente la cantidad de intervenciones técnicas requeridas mensualmente, bajando la demanda real de soporte de la empresa prestadora del servicio. Competencia y condiciones del mercado: La empresa ABC ha realizado una consulta informal con otras compañías del sector y ha detectado que hay ofertas de servicios similares con tarifas menores en aproximadamente un 20%, con condiciones muy atractivas respecto a tiempos de respuesta y alcance del servicio. Si bien ABC prefiere mantener la relación comercial con la empresa actual por la confianza construida, considera esencial ajustar el costo del servicio para mantener la relación comercial en el tiempo. Este planteo genera la necesidad de una respuesta estratégica por parte de la empresa XYZ, que debe evaluar cómo sostener su rentabilidad sin poner en riesgo la fidelidad del cliente ABC."
+      }
+    ]
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "7f8f0f4649f3bb6798fa1755cd9db200f85117dd1a03aa7c8cef8d15eb8275f2"
+  }
+}
