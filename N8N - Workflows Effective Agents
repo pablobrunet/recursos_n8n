@@ -329,7 +329,7 @@
     {
       "parameters": {
         "content": "## Workflow: Routing\n\nRouting classifies an input and directs it to a specialized followup task. This workflow allows for separation of concerns, and building more specialized prompts. Without this workflow, optimizing for one kind of input can hurt performance on other inputs.",
-        "height": 880,
+        "height": 920,
         "width": 1920,
         "color": 3
       },
@@ -405,6 +405,22 @@
       "id": "f269c994-59b0-4690-a8a1-482b69ae6ebe",
       "name": "When chat message received",
       "webhookId": "f75c4a5a-b48c-4599-bd95-6b30cb4c1fe6"
+    },
+    {
+      "parameters": {
+        "content": "Acá el tutorial para que lo puedas implementar:\n\n[![Youtube Thumbnail](https://i.insider.com/5d41b075454a397c1a051dd5?width=700)](https://www.youtube.com/watch?v=PvmdVmESFvs)\n",
+        "height": 360,
+        "width": 420,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1620,
+        1220
+      ],
+      "typeVersion": 1,
+      "id": "1a560ddd-9b96-4a6c-a64d-20fbb8b2a1cc",
+      "name": "Sticky Note4"
     }
   ],
   "connections": {
